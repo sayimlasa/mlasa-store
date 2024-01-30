@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Admin\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,5 +18,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user', [UserController::class, 'index'])->name('users.list');
+Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/user/store', [UserController::class, 'store'])->name('users.save');
+

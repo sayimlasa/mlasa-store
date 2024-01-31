@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -39,34 +41,42 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+   /**
+     * Display a listing of the resource.
      */
-    protected function validator(array $data)
+    public function index()
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        $users=User::all();
+        return view('admin.users.list',compact('users'));
     }
 
     /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
+     * Show the form for creating a new resource.
      */
-    protected function create(array $data)
+    public function create(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+     
+        $userid = $request->get('userid') ?? '';
+        if (!empty($userid)) {
+            $user = User::query()->where('users.id', $userid)->first();  
+        }else{
+            return view('admin.users.create');
+        }
+   
     }
+    public function store(Request $request)
+    {
+        $userarray = $request->get('user');
+        if (empty($userarray['id'])) {//new
+            $userarray['password'] = bcrypt('user123');
+            $userarray['created_by'] = Auth::id();
+            User::query()->create($userarray);
+        } else {//update
+            $user = User::query()->find($userarray['id']);
+            if (!$user) redirect()->back()->with('error', 'User not found');
+            $userarray['modified_by'] = Auth::id();
+            $user->update($userarray);
+        }
+    }
+   
 }

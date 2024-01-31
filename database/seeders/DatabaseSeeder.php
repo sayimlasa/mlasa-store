@@ -1,7 +1,8 @@
 <?php
 
 namespace Database\Seeders;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,12 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-     \App\Models\User::factory(10)->create();
-
-     \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password'=>'123'
+        User::query()->insert([
+            'fname' => 'admin',
+            'mname' => 'admin',
+            'lname' => 'admin',
+            'username' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('123'),
+            'dob' => '2000-01-01',
+            'created_by' => '1',
+            'created_at' => now(),
         ]);
+
     }
 }

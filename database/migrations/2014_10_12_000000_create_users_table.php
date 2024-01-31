@@ -23,9 +23,9 @@ return new class extends Migration
             $table->string('mobileno')->nullable();
             $table->string('citizenship')->nullable();
             $table->string('maritalstatus')->nullable();
-            $table->date('dob');
+            $table->date('dob')->nullable();
             $table->integer('created_by');
-            $table->integer('modified_by');
+            $table->integer('modified_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

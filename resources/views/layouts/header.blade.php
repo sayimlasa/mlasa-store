@@ -1,4 +1,4 @@
- <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+ <nav class="main-header navbar navbar-expand navbar-white navbar-light" >
      <!-- Left navbar links -->
      <ul class="navbar-nav">
          <li class="nav-item">
@@ -10,10 +10,10 @@
              </a>
              <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                  <li><a class="dropdown-item" href="{{route('users.list')}}">User</a></li>
-                 <li><a class="dropdown-item" href="#">Role</a></li>
+                 <li><a class="dropdown-item" href="{{route('roles.list')}}">Role</a></li>
                  <li><a class="dropdown-item" href="#">Department</a></li>
                  <li><a class="dropdown-item" href="#">Doctor</a></li>
-                 <li><a class="dropdown-item" href="#">Branch</a></li>
+                 <li><a class="dropdown-item" href="{{route('branches')}}">Branch</a></li>
                  <li><a class="dropdown-item" href="#">Location</a></li>
                  <li><a class="dropdown-item" href="#">Wing</a></li>
                  <li><a class="dropdown-item" href="#">Ward</a></li>
